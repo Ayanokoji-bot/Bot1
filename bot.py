@@ -1,22 +1,36 @@
-import fbchat
-from fbchat import Client
+import os
+from fbchat import Client, log
 from fbchat.models import Message
+from dotenv import load_dotenv
+from flask import Flask
+
+# Chargement des variables d'environnement
+load_dotenv()
 
 class JordanBot(Client):
-    def __init__(self, email, password, session_cookies=None):
-        # Nouvelle syntaxe pour fbchat v2.0+
-        super().__init__(email, password, session_cookies=session_cookies)
+    def __init__(self):
+        super().__init__(os.getenv("FB_EMAIL"), os.getenv("FB_PASSWORD"))
     
     def onMessage(self, author_id, message, thread_id, thread_type, **kwargs):
-        if author_id == "100088171557555":  # Votre ID Facebook
+        # Votre logique de commandes
+        if author_id == os.getenv("CREATOR_ID"):
             if "_mon serviteur" in message:
-                self.handle_creator_command(message, thread_id, thread_type)
-        elif "-Ai" in message:
-            self.handle_general_command(message, thread_id, thread_type)
+                self.send(Message(text="À vos ordres, mon empereur!"), 
+                        thread_id=thread_id, 
+                        thread_type=thread_type)
 
-# Initialisation correcte
-bot = JordanBot(
-    email="empereurmahamat@gmail.com",
-    password="monbotcompte235jordan"
-)
-bot.listen()
+# Configuration Flask pour keep-alive
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot Actif"
+
+def run_flask():
+    app.run(host='0.0.0.0', port=8080)
+
+if __name__ == "__main__":
+    import threading
+    threading.Thread(target=run_flask).start()
+    bot = JordanBot()
+    bot.listen()
