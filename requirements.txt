@@ -1,1 +1,1 @@
-pip install fbchat-asyncio==0.6.21
+fbchat-asyncio==0.6.21
