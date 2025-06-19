@@ -1,1 +1,3 @@
-git+https://github.com/Schmavery/facebook-chat-api
+fbchat-asyncio==0.6.21
+python-dotenv
+flask
