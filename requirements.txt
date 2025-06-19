@@ -1,1 +1,2 @@
-fbchat-asyncio==0.6.21
+fbchat==2.0.0a2
+python-dotenv
