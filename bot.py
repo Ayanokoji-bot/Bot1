@@ -4,6 +4,7 @@ from fbchat import Client
 from fbchat.models import Message
 from dotenv import load_dotenv
 from flask import Flask
+import threading
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
@@ -38,4 +39,14 @@ def home():
     return "Bot Actif"
 
 def run_flask():
-    app.run(host='0.0.0.0', port=
+    app.run(host='0.0.0.0', port=8080)
+
+if __name__ == "__main__":
+    # Démarrer Flask dans un thread séparé
+    flask_thread = threading.Thread(target=run_flask)
+    flask_thread.daemon = True
+    flask_thread.start()
+    
+    # Démarrer le bot
+    bot = JordanBot()
+    bot.listen()
