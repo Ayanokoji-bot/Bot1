@@ -1,4 +1,4 @@
-# EmpereurBot
+# Bot1
 
 🤖 Un bot Messenger fidèle à l’Empereur Jordan Inferno’s, fonctionnant 24h/24 via Render.
 
